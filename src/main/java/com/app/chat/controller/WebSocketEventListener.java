@@ -5,8 +5,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
+import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.messaging.SessionConnectedEvent;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
@@ -25,18 +27,6 @@ public class WebSocketEventListener {
   @EventListener
   public void handleWebSocketConnectListener(SessionConnectedEvent event) {
     logger.info("Received a new web socket connection");
-    StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(event.getMessage());
-    headerAccessor.getSessionAttributes();
-    if (headerAccessor.getSessionAttributes() != null && headerAccessor.getSessionAttributes().get("username") != null) {
-      String username = (String) headerAccessor.getSessionAttributes().get("username");
-      if (username != null) {
-        logger.info("User connected: " + username);
-        Message message = new Message();
-        message.setType(Message.MessageType.JOIN);
-        message.setSender(username);
-        messagingTemplate.convertAndSend("/cast/all", message);
-      }
-    }
   }
 
   @EventListener
@@ -44,11 +34,22 @@ public class WebSocketEventListener {
     StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(event.getMessage());
     String username = (String) headerAccessor.getSessionAttributes().get("username");
     if (username != null) {
-      logger.info("User Disconnected: " + username);
+      logger.info("User disconnected: " + username);
       Message message = new Message();
       message.setType(Message.MessageType.LEAVE);
       message.setSender(username);
       messagingTemplate.convertAndSend("/cast/all", message);
     }
+  }
+
+  @Scheduled(fixedRate = 5000)
+  public void greeting() {
+    try {
+      Thread.sleep(1000);
+    } catch (InterruptedException e) {
+      logger.error("Exception occurred", e);
+    }
+    logger.info("Scheduled!");
+    messagingTemplate.convertAndSend("/cast/all", "Hello");
   }
 }

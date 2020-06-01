@@ -30,7 +30,7 @@ public class CommandExecutor {
         output.append(line).append("\n");
       }
       exitVal = process.waitFor();
-      logger.info("System command received from user: " + username);
+      logger.info("System command received from user: " + username + " -> " + command);
       if (exitVal == 0) {
         logger.info("Execution result -> Success");
         logger.info("Output: " + output.toString());
@@ -39,7 +39,7 @@ public class CommandExecutor {
         logger.info("Execution result -> Failure");
       }
     } catch (IOException | InterruptedException e) {
-      logger.error("Error occurred during execution", e.getMessage());
+      logger.error("Error occurred during execution", e);
     }
     return exitVal;
   }
