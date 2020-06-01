@@ -41,15 +41,4 @@ public class WebSocketEventListener {
       messagingTemplate.convertAndSend("/cast/all", message);
     }
   }
-
-  @Scheduled(fixedRate = 5000)
-  public void greeting() {
-    try {
-      Thread.sleep(1000);
-    } catch (InterruptedException e) {
-      logger.error("Exception occurred", e);
-    }
-    logger.info("Scheduled!");
-    messagingTemplate.convertAndSend("/cast/all", "Hello");
-  }
 }

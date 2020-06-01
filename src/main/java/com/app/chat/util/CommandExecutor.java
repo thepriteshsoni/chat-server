@@ -2,7 +2,7 @@ package com.app.chat.util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,7 +12,7 @@ import java.io.InputStreamReader;
  * @author Pritesh Soni
  *
  */
-@Component
+@Service
 public class CommandExecutor {
 
   private static final Logger logger = LoggerFactory.getLogger(CommandExecutor.class);

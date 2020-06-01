@@ -15,7 +15,16 @@ public class Message {
         LEAVE
     }
 
-    public MessageType getType() {
+  public Message(MessageType type, String content, String sender) {
+    this.type = type;
+    this.content = content;
+    this.sender = sender;
+  }
+
+  public Message() {
+  }
+
+  public MessageType getType() {
         return type;
     }
 

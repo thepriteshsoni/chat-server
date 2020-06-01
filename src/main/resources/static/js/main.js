@@ -19,7 +19,7 @@ var colors = [
 function connect(event) {
     username = document.querySelector('#name').value.trim();
 
-    if(username) {
+    if (username) {
         usernamePage.classList.add('hidden');
         chatPage.classList.remove('hidden');
 
@@ -55,7 +55,7 @@ function onError(error) {
 function sendMessage(event) {
     var messageContent = messageInput.value.trim();
 
-    if(messageContent && stompClient) {
+    if (messageContent && stompClient) {
         var chatMessage = {
             sender: username,
             content: messageInput.value,
@@ -74,7 +74,7 @@ function onMessageReceived(payload) {
 
     var messageElement = document.createElement('li');
 
-    if(message.type === 'JOIN') {
+    if (message.type === 'JOIN') {
         messageElement.classList.add('event-message');
         message.content = message.sender + ' joined!';
     } else if (message.type === 'LEAVE') {
