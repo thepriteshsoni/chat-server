@@ -24,7 +24,10 @@ public class ChatController {
   public Message sendMessage(@Payload Message message) {
     String messageContent = message.getContent();
     if (messageContent.startsWith("//")) {
-      commandExecutor.executeShellCommand(messageContent.substring(2));
+      int result = commandExecutor.executeShellCommand(messageContent.substring(2), message.getSender());
+      messageContent += " -> Result of execution: ";
+      messageContent += result == 0 ? "ACK" : "NOACK";
+      message.setContent(messageContent);
     }
     return message;
   }

@@ -17,12 +17,10 @@ public class CommandExecutor {
 
   private static final Logger logger = LoggerFactory.getLogger(CommandExecutor.class);
 
-  public int executeShellCommand(String command) {
+  public int executeShellCommand(String command, String username) {
     ProcessBuilder processBuilder = new ProcessBuilder();
-//    processBuilder.command("bash", "-c", "ls /home/mkyong/");
-    processBuilder.command(command);
+    processBuilder.command("bash", "-c", command);
     int exitVal = 0;
-
     try {
       Process process = processBuilder.start();
       StringBuilder output = new StringBuilder();
@@ -32,17 +30,16 @@ public class CommandExecutor {
         output.append(line).append("\n");
       }
       exitVal = process.waitFor();
+      logger.info("System command received from user: " + username);
       if (exitVal == 0) {
-        logger.info("Success!");
+        logger.info("Execution result -> Success");
         logger.info("Output: " + output.toString());
-        System.exit(0);
       } else {
-        // abnormal
-        logger.error("Failure!");
+        // error during execution
+        logger.info("Execution result -> Failure");
       }
-
     } catch (IOException | InterruptedException e) {
-      e.printStackTrace();
+      logger.error("Error occurred during execution", e.getMessage());
     }
     return exitVal;
   }

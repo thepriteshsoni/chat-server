@@ -27,7 +27,7 @@ public class WebSocketEventListener {
     logger.info("Received a new web socket connection");
     StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(event.getMessage());
     headerAccessor.getSessionAttributes();
-    if (headerAccessor.getSessionAttributes().get("username") != null) {
+    if (headerAccessor.getSessionAttributes() != null && headerAccessor.getSessionAttributes().get("username") != null) {
       String username = (String) headerAccessor.getSessionAttributes().get("username");
       if (username != null) {
         logger.info("User connected: " + username);
