@@ -23,10 +23,17 @@ git clone https://github.com/thepriteshsoni/chat-server.git
 4. Run the app using maven:
 
 a. If you already have a pre-existing project-specific settings.xml file for Maven with a remote repository, use the one provided along with the repo:
-mvn spring-boot:run -s <Path to your working directory>/chat-server/settings.xml
+mvn spring-boot:run -s <Path to your working directory>/chat-server/settings.xml &
 
 b. If you don't have a project-specific settings.xml file, run the following maven command to execute the project:
-mvn spring-boot:run
+mvn spring-boot:run &
+
+5. Open your browser and go to the address:
+http://localhost:8080
+
+6. To open multiple clients, simply open new tabs and connect to the same url given above.
+
+7. Happy testing!
 
 # Contact the developer
 For queries and clarifications, kindly drop in a mail to thepriteshsoni@gmail.com
